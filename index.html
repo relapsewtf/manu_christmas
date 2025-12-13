@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Navidad - Hardware Supremo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="snow-container"></div>
+    <div class="cursor-glow"></div>
+
+    <!-- Intro Overlay -->
+    <div id="intro-overlay">
+        <div class="intro-content">
+            <h1 class="intro-title">TOP SECRET</h1>
+            <p class="intro-subtitle">Lista de Deseos Clasificada</p>
+            <button id="enter-btn">ACCEDER AL SISTEMA</button>
+        </div>
+    </div>
+
+    <main class="hidden-initially">
+        <header class="fade-in">
+            <h1>Lista de Navidad <span class="year">2025</span></h1>
+            <p class="subtitle">Infraestructura de Alto Rendimiento</p>
+        </header>
+
+        <!-- Tip for user -->
+        <div class="user-tip fade-in">
+            <span class="desktop-tip">Usa las flechas &#8592; / &#8594; para navegar | Click para comprar</span>
+            <span class="mobile-tip">Desliza para navegar | Toca para detalles</span>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-btn prev-btn" aria-label="Anterior">&#10094;</button>
+
+            <div class="slider-track">
+                <!-- DMA Card -->
+                <a href="https://captaindma.com/product/captain-dma-75t/" target="_blank"
+                    class="card active product-link">
+                    <div class="card-image">
+                        <img src="assets/dma.png" alt="Captain DMA 75T">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="item-title">Captain DMA <span class="high-tech">75T</span></h2>
+                        <p class="reason">
+                            El corazón del sistema. Necesito la <strong>Captain DMA 75T</strong> por su velocidad de
+                            transferencia ultrarrápida y estabilidad firmware.
+                            Actualización crítica.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Motherboard -->
+                <a href="https://www.brack.ch/gigabyte-mainboard-b550-gaming-x-v2-1546471?utm_source=google&utm_medium=cpc&utm_campaign=%21cc-pssh%21l-d%21e-g%21t-pla%21t2-css%21k1-it%21z-it_multimedia_pmax&utm_term=&adgroup_id=&ad_position=&ad_type=pla&campaign_id=18732681987"
+                    target="_blank" class="card product-link">
+                    <div class="card-image">
+                        <img src="assets/mobo.png" alt="Gigabyte B550 Gaming X V2">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="item-title">B550 GAMING X V2 <span class="high-tech">Gigabyte</span></h2>
+                        <p class="reason">
+                            <strong>NO ASUS.</strong> La Gigabyte B550 Gaming X V2 ofrece VRMs robustos
+                            y una arquitectura PCIe 4.0 estable y aislada. Fiabilidad pura.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Firmware -->
+                <a href="#" class="card contact-link">
+                    <div class="card-image">
+                        <img src="assets/firmware.png" alt="Kirby Invisible Firmware">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="item-title">Kirby Invisible FW <span class="price">Privado</span></h2>
+                        <p class="reason">
+                            Necesito el firmware personalizado de Kirby.
+                            <strong>Contáctame o envíame mensaje</strong> para los detalles. Invisibilidad total.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- NVME -->
+                <a href="https://captaindma.com/product/privacy-drive-no-hwid-no-serial-number-drive-512g/"
+                    target="_blank" class="card product-link">
+                    <div class="card-image">
+                        <img src="assets/nvme.png" alt="Invisible NVME">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="item-title">Privacy Drive <span class="price">512GB</span></h2>
+                        <p class="reason">
+                            Unidad M.2 sin HWID ni número de serie. Almacenamiento seguro y anónimo.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Fuser -->
+                <a href="#" class="card contact-link">
+                    <div class="card-image">
+                        <img src="assets/fuser.png" alt="Godlike Fuser">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="item-title">Godlike Fuser</h2>
+                        <p class="reason">
+                            Situación crítica: <strong>El que pedimos está roto.</strong> Necesito reemplazo. Habla
+                            conmigo.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <button class="nav-btn next-btn" aria-label="Siguiente">&#10095;</button>
+        </div>
+
+        <div class="status-bar">
+            <span id="current-index">1</span> / <span id="total-count">5</span>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
