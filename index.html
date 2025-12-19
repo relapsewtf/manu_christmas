@@ -8,36 +8,33 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@200;400;700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
+    <div class="scanlines"></div>
     <div id="snow-container"></div>
     <div class="cursor-glow"></div>
 
     <!-- Intro Overlay -->
     <div id="intro-overlay">
         <div class="intro-content">
-            <h1 class="intro-title">TOP SECRET</h1>
-            <p class="intro-subtitle">Lista de Deseos Clasificada</p>
-            <button id="enter-btn">ACCEDER AL SISTEMA</button>
+            <h1 class="intro-title" data-text="TOP SECRET">TOP SECRET</h1>
+            <p class="intro-subtitle">Requisición de Hardware Segura</p>
+            <button id="enter-btn">INICIAR SISTEMA</button>
         </div>
     </div>
 
     <main class="hidden-initially">
         <header class="fade-in">
-            <h1>Lista de Navidad <span class="year">2025</span></h1>
-            <p class="subtitle">Infraestructura de Alto Rendimiento</p>
+            <h1>Hardware <span class="year">2025</span></h1>
+            <p class="subtitle">Lista Clasificada // Protocolo Omega</p>
         </header>
 
-        <!-- Tip for user -->
-        <div class="user-tip fade-in">
-            <span class="desktop-tip">Usa las flechas &#8592; / &#8594; para navegar | Click para comprar</span>
-            <span class="mobile-tip">Desliza para navegar | Toca para detalles</span>
-        </div>
-
         <div class="slider-container">
-            <button class="nav-btn prev-btn" aria-label="Anterior">&#10094;</button>
+            <button class="nav-btn prev-btn" aria-label="Previous">&#10094;</button>
 
             <div class="slider-track">
                 <!-- DMA Card -->
@@ -47,11 +44,11 @@
                         <img src="assets/dma.png" alt="Captain DMA 75T">
                     </div>
                     <div class="card-content">
-                        <h2 class="item-title">Captain DMA <span class="high-tech">75T</span></h2>
+                        <h2 class="item-title">Captain DMA <span>75T</span></h2>
                         <p class="reason">
-                            El corazón del sistema. Necesito la <strong>Captain DMA 75T</strong> por su velocidad de
-                            transferencia ultrarrápida y estabilidad firmware.
-                            Actualización crítica.
+                            Sistemas Críticos. <strong>Captain DMA 75T</strong> requerido para operación bus-master.
+                            Baja
+                            latencia. Indetectable.
                         </p>
                     </div>
                 </a>
@@ -63,24 +60,39 @@
                         <img src="assets/mobo.png" alt="Gigabyte B550 Gaming X V2">
                     </div>
                     <div class="card-content">
-                        <h2 class="item-title">B550 GAMING X V2 <span class="high-tech">Gigabyte</span></h2>
+                        <h2 class="item-title">B550 GAMING X V2 <span>MOBO</span></h2>
                         <p class="reason">
-                            <strong>NO ASUS.</strong> La Gigabyte B550 Gaming X V2 ofrece VRMs robustos
-                            y una arquitectura PCIe 4.0 estable y aislada. Fiabilidad pura.
+                            <strong>Especificación Objetivo.</strong> Arquitectura Gigabyte B550. Validación de
+                            agrupación IOMMU confirmada.
                         </p>
                     </div>
                 </a>
 
-                <!-- Firmware -->
-                <a href="#" class="card contact-link">
+                <!-- Intel Processor -->
+                <a href="https://www.digitec.ch/de/s1/product/intel-core-i5-14400f-lga-1700-250-ghz-10-core-prozessor-41791733?utm_source=google&utm_medium=cpc&utm_campaign=SEA_CH-DE_DSA_Clustering_V3.0&campaignid=16472930352&adgroupid=137947328110&adid=585987855827&dgCidg=Cj0KCQiAjJTKBhCjARIsAIMC44_GWT8JxJ-vYwISrzAcmNF2w_ZuLeT03HITOuswSN3pC8k-xoK0ESEaAiKeEALw_wcB&gclsrc=aw.ds&gad_source=1&gad_campaignid=16472930352&gbraid=0AAAAADnW3wattjXB-j_wIIBZ_XlJYiafr&gclid=Cj0KCQiAjJTKBhCjARIsAIMC44_GWT8JxJ-vYwISrzAcmNF2w_ZuLeT03HITOuswSN3pC8k-xoK0ESEaAiKeEALw_wcB"
+                    target="_blank" class="card product-link">
                     <div class="card-image">
-                        <img src="assets/firmware.png" alt="Kirby Invisible Firmware">
+                        <img src="assets/cpu.png" alt="Intel 12TH Gen Processor">
                     </div>
                     <div class="card-content">
-                        <h2 class="item-title">Kirby Invisible FW <span class="price">Privado</span></h2>
+                        <h2 class="item-title">Intel Core <span>14400F</span></h2>
                         <p class="reason">
-                            Necesito el firmware personalizado de Kirby.
-                            <strong>Contáctame o envíame mensaje</strong> para los detalles. Invisibilidad total.
+                            Núcleo de Procesamiento. Alto conteo de hilos. Optimizado para virtualización y cargas
+                            concurrentes.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- VMD Firmware -->
+                <a href="#" class="card contact-link">
+                    <div class="card-image">
+                        <img src="assets/firmware.png" alt="VMD Firmware">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="item-title">VMD Firmware <span>PRIVADO</span></h2>
+                        <p class="reason">
+                            Instrucciones de controlador VMD customizadas. <strong>Contactar para hash de
+                                compilación.</strong>
                         </p>
                     </div>
                 </a>
@@ -92,9 +104,9 @@
                         <img src="assets/nvme.png" alt="Invisible NVME">
                     </div>
                     <div class="card-content">
-                        <h2 class="item-title">Privacy Drive <span class="price">512GB</span></h2>
+                        <h2 class="item-title">Ghost Drive <span>512GB</span></h2>
                         <p class="reason">
-                            Unidad M.2 sin HWID ni número de serie. Almacenamiento seguro y anónimo.
+                            Módulo de almacenamiento con firmas HWID nulificadas. Persistencia de datos efímera.
                         </p>
                     </div>
                 </a>
@@ -105,20 +117,24 @@
                         <img src="assets/fuser.png" alt="Godlike Fuser">
                     </div>
                     <div class="card-content">
-                        <h2 class="item-title">Godlike Fuser</h2>
+                        <h2 class="item-title">Godlike Fuser <span>HD</span></h2>
                         <p class="reason">
-                            Situación crítica: <strong>El que pedimos está roto.</strong> Necesito reemplazo. Habla
-                            conmigo.
+                            Unidad de mezcla de señal de video. Reemplazo requerido para unidad dañada.
                         </p>
                     </div>
                 </a>
             </div>
 
-            <button class="nav-btn next-btn" aria-label="Siguiente">&#10095;</button>
+            <button class="nav-btn next-btn" aria-label="Next">&#10095;</button>
         </div>
 
         <div class="status-bar">
-            <span id="current-index">1</span> / <span id="total-count">5</span>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="counter">
+                <span id="current-index">01</span> / <span id="total-count">06</span>
+            </div>
         </div>
     </main>
 
