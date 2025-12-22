@@ -1,128 +1,100 @@
-// Custom Cursor
-const cursorGlow = document.querySelector('.cursor-glow');
-document.addEventListener('mousemove', (e) => {
-    cursorGlow.style.left = e.clientX + 'px';
-    cursorGlow.style.top = e.clientY + 'px';
-});
+document.addEventListener('DOMContentLoaded', () => {
+    const enterBubble = document.getElementById('enter-bubble');
+    const introScreen = document.getElementById('intro-screen');
+    const mainContent = document.getElementById('main-content');
+    const bgm = document.getElementById('bgm');
 
-// Intro Logic
-const introOverlay = document.getElementById('intro-overlay');
-const enterBtn = document.getElementById('enter-btn');
-const mainContent = document.querySelector('main');
+    enterBubble.addEventListener('click', () => {
+        // Fade out intro
+        introScreen.style.transition = 'opacity 0.8s ease';
+        introScreen.style.opacity = '0';
 
-const startExperience = () => {
-    introOverlay.style.opacity = '0';
-    introOverlay.style.pointerEvents = 'none';
-    mainContent.classList.remove('hidden-initially');
-    mainContent.classList.add('visible');
-};
+        // Initialize Audio Context on click (browser requirement)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
 
-enterBtn.addEventListener('click', startExperience);
+        // Procedural Audio: Natural "Wind" and "Chimes"
+        function playAmbient() {
+            // 1. Wind (Pink/Brownian Noise approximation via filtered White Noise)
+            const bufferSize = 2 * audioCtx.sampleRate;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            let lastOut = 0;
 
-// Slider Logic
-const cards = document.querySelectorAll('.card');
-const prevBtn = document.querySelector('.prev-btn');
-const nextBtn = document.querySelector('.next-btn');
-const currentIndexDisplay = document.getElementById('current-index');
-const totalCountDisplay = document.getElementById('total-count');
+            for (let i = 0; i < bufferSize; i++) {
+                const white = Math.random() * 2 - 1;
+                output[i] = (lastOut + (0.02 * white)) / 1.02; // Simple Brownian-ish smoothing
+                lastOut = output[i];
+                output[i] *= 3.5; // Gain compensation
+            }
 
-let currentIndex = 0;
-totalCountDisplay.textContent = cards.length;
+            const noiseNode = audioCtx.createBufferSource();
+            noiseNode.buffer = noiseBuffer;
+            noiseNode.loop = true;
 
-function updateSlider() {
-    cards.forEach((card, index) => {
-        card.classList.remove('active', 'prev', 'next');
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.value = 0.15; // Volume
 
-        if (index === currentIndex) {
-            card.classList.add('active');
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = 400;
+            filter.Q.value = 1;
+
+            // Modulate filter for "breeze" effect
+            const oscillator = audioCtx.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.frequency.value = 0.1; // Slow modulation
+            const oscGain = audioCtx.createGain();
+            oscGain.gain.value = 200; // Depth of modulation
+
+            oscillator.connect(oscGain);
+            oscGain.connect(filter.frequency);
+            oscillator.start();
+
+            noiseNode.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            noiseNode.start();
+
+            // 2. Occasional Chimes
+            setInterval(() => {
+                if (Math.random() > 0.7) playChime(audioCtx);
+            }, 5000 + Math.random() * 4000);
         }
-        // We can add simple logic for prev/next classes if we want more fancy CSS later
-        else if (index === (currentIndex - 1 + cards.length) % cards.length) {
-            card.classList.add('prev');
+
+        function playChime(ctx) {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.frequency.value = 800 + Math.random() * 600; // High frequency
+            osc.type = 'sine';
+
+            gain.gain.setValueAtTime(0.05, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 2);
         }
-        else if (index === (currentIndex + 1) % cards.length) {
-            card.classList.add('next');
+
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
         }
+
+        try {
+            playAmbient();
+        } catch (e) {
+            console.error("Audio generation failed:", e);
+        }
+
+        setTimeout(() => {
+            introScreen.style.display = 'none';
+            mainContent.classList.remove('hidden');
+
+            // Trigger reflow
+            void mainContent.offsetWidth;
+
+            mainContent.classList.add('visible');
+        }, 800);
     });
-
-    currentIndexDisplay.textContent = currentIndex + 1;
-}
-
-function nextSlide() {
-    currentIndex = (currentIndex + 1) % cards.length;
-    updateSlider();
-}
-
-function prevSlide() {
-    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-    updateSlider();
-}
-
-nextBtn.addEventListener('click', nextSlide);
-prevBtn.addEventListener('click', prevSlide);
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') nextSlide();
-    if (e.key === 'ArrowLeft') prevSlide();
-    if (e.key === 'Enter' && introOverlay.style.opacity !== '0') startExperience();
 });
-
-// SWIPE SUPPORT (Mobile)
-let touchStartX = 0;
-let touchEndX = 0;
-
-document.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-});
-
-document.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    checkSwipe();
-});
-
-function checkSwipe() {
-    const threshold = 50; // min distance
-    if (touchEndX < touchStartX - threshold) {
-        nextSlide(); // Swipe Left -> Next
-    }
-    if (touchEndX > touchStartX + threshold) {
-        prevSlide(); // Swipe Right -> Prev
-    }
-}
-
-// Contact Links Handler
-const contactLinks = document.querySelectorAll('.contact-link');
-contactLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Mensaje del sistema: "Escríbeme para arreglar esto."');
-    });
-});
-
-
-// Snow Effect
-const snowContainer = document.getElementById('snow-container');
-const particleCount = 50;
-for (let i = 0; i < particleCount; i++) {
-    const snowflake = document.createElement('div');
-    snowflake.style.position = 'absolute';
-    snowflake.style.background = 'white';
-    snowflake.style.borderRadius = '50%';
-    snowflake.style.opacity = Math.random() * 0.5 + 0.1;
-    snowflake.style.width = Math.random() * 3 + 1 + 'px';
-    snowflake.style.height = snowflake.style.width;
-    snowflake.style.left = Math.random() * 100 + 'vw';
-    snowflake.style.animation = `fall ${Math.random() * 10 + 5}s linear infinite`;
-    snowflake.style.animationDelay = Math.random() * -10 + 's';
-    snowContainer.appendChild(snowflake);
-}
-const styleDate = document.createElement('style');
-styleDate.innerHTML = `
-@keyframes fall {
-    0% { transform: translateY(-10vh); }
-    100% { transform: translateY(110vh); }
-}`;
-document.head.appendChild(styleDate);
-
-// Init
-updateSlider();
