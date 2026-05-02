@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const enterScreen = document.getElementById('enter-screen');
-    enterScreen.addEventListener('click', () => {
-        enterScreen.style.opacity = '0';
-        setTimeout(() => enterScreen.style.display = 'none', 500);
+    const enterBubble = document.getElementById('enterBubble');
+    enterBubble.addEventListener('click', () => {
+        enterBubble.style.opacity = '0';
+        setTimeout(() => enterBubble.style.display = 'none', 500);
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         ctx.resume();
         confettiAudio.load();
