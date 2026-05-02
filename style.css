@@ -446,3 +446,46 @@ p {
     50% { opacity: 1; transform: translate(var(--x), -50px) scale(1.2) rotate(45deg); }
     100% { opacity: 0; transform: translate(calc(var(--x) * 2), 100px) scale(1) rotate(90deg); }
 }
+
+/* Wishlist Section */
+.disclaimer {
+    margin-bottom: 2rem;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.wishlist {
+    text-align: left;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.wishlist p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.wishlist ul {
+    list-style: none;
+    padding: 0;
+}
+
+.wishlist li {
+    margin-bottom: 1rem;
+}
+
+.wish-link {
+    color: var(--accent-1);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+    display: inline-block;
+}
+
+.wish-link:hover {
+    color: var(--text-main);
+    text-shadow: 0 0 10px var(--accent-1);
+}
