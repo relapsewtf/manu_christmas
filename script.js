@@ -1,100 +1,89 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const enterBubble = document.getElementById('enter-bubble');
-    const introScreen = document.getElementById('intro-screen');
-    const mainContent = document.getElementById('main-content');
-    const bgm = document.getElementById('bgm');
+    const confettiAudio = new Audio('confetti.mp3');
+    const songAudio = new Audio('cumpleanos.mp3');
+    let hasPlayedFinaleAudio = false;
 
-    enterBubble.addEventListener('click', () => {
-        // Fade out intro
-        introScreen.style.transition = 'opacity 0.8s ease';
-        introScreen.style.opacity = '0';
+    function playPopFallback() {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.15);
+    }
 
-        // Initialize Audio Context on click (browser requirement)
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
-
-        // Procedural Audio: Natural "Wind" and "Chimes"
-        function playAmbient() {
-            // 1. Wind (Pink/Brownian Noise approximation via filtered White Noise)
-            const bufferSize = 2 * audioCtx.sampleRate;
-            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const output = noiseBuffer.getChannelData(0);
-            let lastOut = 0;
-
-            for (let i = 0; i < bufferSize; i++) {
-                const white = Math.random() * 2 - 1;
-                output[i] = (lastOut + (0.02 * white)) / 1.02; // Simple Brownian-ish smoothing
-                lastOut = output[i];
-                output[i] *= 3.5; // Gain compensation
-            }
-
-            const noiseNode = audioCtx.createBufferSource();
-            noiseNode.buffer = noiseBuffer;
-            noiseNode.loop = true;
-
-            const gainNode = audioCtx.createGain();
-            gainNode.gain.value = 0.15; // Volume
-
-            const filter = audioCtx.createBiquadFilter();
-            filter.type = 'lowpass';
-            filter.frequency.value = 400;
-            filter.Q.value = 1;
-
-            // Modulate filter for "breeze" effect
-            const oscillator = audioCtx.createOscillator();
-            oscillator.type = 'sine';
-            oscillator.frequency.value = 0.1; // Slow modulation
-            const oscGain = audioCtx.createGain();
-            oscGain.gain.value = 200; // Depth of modulation
-
-            oscillator.connect(oscGain);
-            oscGain.connect(filter.frequency);
-            oscillator.start();
-
-            noiseNode.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            noiseNode.start();
-
-            // 2. Occasional Chimes
-            setInterval(() => {
-                if (Math.random() > 0.7) playChime(audioCtx);
-            }, 5000 + Math.random() * 4000);
-        }
-
-        function playChime(ctx) {
+    function playSongFallback() {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const notes = [
+            { f: 392.00, d: 0.25 }, { f: 392.00, d: 0.25 }, { f: 440.00, d: 0.5 }, { f: 392.00, d: 0.5 }, { f: 523.25, d: 0.5 }, { f: 493.88, d: 1.0 },
+            { f: 392.00, d: 0.25 }, { f: 392.00, d: 0.25 }, { f: 440.00, d: 0.5 }, { f: 392.00, d: 0.5 }, { f: 587.33, d: 0.5 }, { f: 523.25, d: 1.0 },
+            { f: 392.00, d: 0.25 }, { f: 392.00, d: 0.25 }, { f: 783.99, d: 0.5 }, { f: 659.25, d: 0.5 }, { f: 523.25, d: 0.5 }, { f: 493.88, d: 0.5 }, { f: 440.00, d: 1.0 },
+            { f: 698.46, d: 0.25 }, { f: 698.46, d: 0.25 }, { f: 659.25, d: 0.5 }, { f: 523.25, d: 0.5 }, { f: 587.33, d: 0.5 }, { f: 523.25, d: 1.0 }
+        ];
+        
+        let startTime = ctx.currentTime + 0.1;
+        const tempo = 1.3;
+        
+        notes.forEach(note => {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
-            osc.frequency.value = 800 + Math.random() * 600; // High frequency
-            osc.type = 'sine';
-
-            gain.gain.setValueAtTime(0.05, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2);
-
             osc.connect(gain);
             gain.connect(ctx.destination);
-            osc.start();
-            osc.stop(ctx.currentTime + 2);
-        }
+            osc.type = 'triangle';
+            osc.frequency.value = note.f;
+            gain.gain.setValueAtTime(0.3, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, startTime + note.d * tempo - 0.05);
+            osc.start(startTime);
+            osc.stop(startTime + note.d * tempo);
+            startTime += note.d * tempo;
+        });
+    }
 
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
+    const enterScreen = document.getElementById('enter-screen');
+    enterScreen.addEventListener('click', () => {
+        enterScreen.style.opacity = '0';
+        setTimeout(() => enterScreen.style.display = 'none', 500);
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        ctx.resume();
+        confettiAudio.load();
+        songAudio.load();
+    });
 
-        try {
-            playAmbient();
-        } catch (e) {
-            console.error("Audio generation failed:", e);
-        }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                
+                if (entry.target.id === 'finale-card' && !hasPlayedFinaleAudio) {
+                    hasPlayedFinaleAudio = true;
+                    
+                    confettiAudio.play().catch(e => {
+                        playPopFallback();
+                    });
+                    
+                    songAudio.play().catch(e => {
+                        playSongFallback();
+                    });
+                }
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
 
-        setTimeout(() => {
-            introScreen.style.display = 'none';
-            mainContent.classList.remove('hidden');
+    const cards = document.querySelectorAll('.glass-card');
+    cards.forEach(card => observer.observe(card));
 
-            // Trigger reflow
-            void mainContent.offsetWidth;
-
-            mainContent.classList.add('visible');
-        }, 800);
+    const background = document.querySelector('.background');
+    document.addEventListener('mousemove', (e) => {
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        background.style.transform = `translate(-${x * 20}px, -${y * 20}px)`;
     });
 });
