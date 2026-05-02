@@ -1,80 +1,89 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mi lista de navidad</title>
+    <title>happy 34th fabian</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-    <!-- Intro Overlay -->
-    <div id="intro-screen">
-        <div class="park-bg"></div>
-        <div class="stickman-container">
-            <img src="assets/stickman_skater.png" alt="Skater Stickman" class="stickman">
-            <div class="speech-bubble" id="enter-bubble">
-                ¡clickéame!
-            </div>
-        </div>
+    <div id="enter-screen"
+        style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:var(--bg-dark);z-index:9999;display:flex;align-items:center;justify-content:center;color:var(--text-main);cursor:pointer;transition:opacity 0.5s;">
+        <h2 style="font-weight:300;letter-spacing:0.1em;animation:pulse 2s infinite;">click to enter</h2>
+    </div>
+    <div class="background">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
     </div>
 
-    <!-- Main Content (Hidden Initially) -->
-    <main id="main-content" class="hidden">
-        <header>
-            <h1>lista de navidad 2025</h1>
-            <p class="subtitle">todo lo que necesito para aprender ciberseguridad</p>
-        </header>
-
-        <div class="items-container">
-
-            <!-- Game PC -->
-            <a href="https://www.tutti.ch/de/vi/thurgau/computer-zubehoer/computer/weisser-game-pc-32-gb-ram-1t-ssd-rtx-5070/78091519"
-                target="_blank" class="item-card">
-                <div class="card-icon">🖥️</div>
-                <div class="card-info">
-                    <h2>weisser game pc</h2>
-                    <span class="specs">32gb ram / 1tb ssd / rtx 5070</span>
-                    <p>necesito esta potencia para virtualizar laboratorios de pruebas y estudiar vulnerabilidades en
-                        entornos controlados.</p>
+    <main class="container">
+        <section class="screen" id="intro">
+            <div class="glass-card">
+                <h1>happy 34th, fabian.</h1>
+                <div class="lock-container">
+                    <span class="lock-closed">🔒</span>
+                    <span class="lock-open">🔓</span>
                 </div>
-            </a>
-
-            <!-- DMA -->
-            <a href="https://captaindma.com/product/captain-dma-75t/" target="_blank" class="item-card">
-                <div class="card-icon">⚡</div>
-                <div class="card-info">
-                    <h2>captain dma 75t</h2>
-                    <p>herramienta esencial para aprender sobre análisis de memoria en tiempo real y seguridad a nivel
-                        de hardware.</p>
+                <p class="era-text">welcome to your era.</p>
+                <div class="scroll-indicator">
+                    <span>scroll</span>
+                    <div class="line"></div>
                 </div>
-            </a>
+            </div>
+        </section>
 
-            <!-- NVME -->
-            <a href="https://captaindma.com/product/privacy-drive-no-hwid-no-serial-number-drive-512g/" target="_blank"
-                class="item-card">
-                <div class="card-icon">💾</div>
-                <div class="card-info">
-                    <h2>ghost drive 512gb</h2>
-                    <p>para investigar sobre forense digital, sistemas de archivos seguros y privacidad de datos.</p>
+        <section class="screen" id="ai-joke">
+            <div class="glass-card">
+                <h2>ai couldn't generate a better brother.</h2>
+                <p>well technically you're already ai, you hold too much <span class="knowledge-container"><span
+                            class="word-knowledge">knowledge</span><span class="word-brain">🧠</span></span></p>
+            </div>
+        </section>
+
+        <section class="screen" id="memories">
+            <div class="glass-card">
+                <h2>you did it.</h2>
+                <div class="kick-scene-container">
+                    <p class="text-original">think of your <span class="kick-container"><span
+                                class="number-33">33</span><span class="foot-emoji">🦶</span></span> like the narcos
+                        escape room, you found the key, so now its time to enjoy the win.</p>
+                    <p class="text-new"><span class="number-34">34.</span> oh hey how did we get here? well whatever,
+                        lets enjoy the ride, it gets better from here.</p>
                 </div>
-            </a>
+            </div>
+        </section>
 
-        </div>
+        <section class="screen" id="wishes">
+            <div class="glass-card">
+                <h2>wishing you the best.</h2>
+                <div class="gift-container">
+                    <span class="gift-emoji">🎁</span>
+                    <span class="heart-emoji">💖</span>
+                </div>
+                <p>eres lo maximo que yo podria desear, gracias por ser mi hermano, mi apoyo y mi confidente, te amo.
+                </p>
+            </div>
+        </section>
 
-        <footer>
-            <p>gracias por mirar :)</p>
-        </footer>
+        <section class="screen" id="finale">
+            <div class="glass-card finale-card" id="finale-card">
+                <div class="confetti-container">
+                    <span class="confetti" style="--d: 0.1s; --x: -80px;">🎉</span>
+                    <span class="confetti" style="--d: 0.3s; --x: 80px;">🎊</span>
+                    <span class="confetti" style="--d: 0.2s; --x: 0px;">🎈</span>
+                    <span class="confetti" style="--d: 0.4s; --x: -40px;">🎉</span>
+                    <span class="confetti" style="--d: 0.5s; --x: 40px;">✨</span>
+                </div>
+                <h1 class="glitch" data-text="happy birthday.">happy birthday.</h1>
+            </div>
+        </section>
     </main>
-
-    <!-- Audio generated procedurally via script.js -->
-
     <script src="script.js"></script>
 </body>
 
